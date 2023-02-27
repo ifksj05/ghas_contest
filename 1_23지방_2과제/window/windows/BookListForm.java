@@ -22,12 +22,13 @@ public class BookListForm extends BaseFrame {
 	private JButton jbSearch;
 	private DefaultTableModel dtm;
 	private JTable jtbBookType;
-	private JScrollPane jcpBookImgs;
+	private JScrollPane jspBookImgs;
 	private BasePanel jpBookImgs;
 	private BaseJLabel jlSearchTime;
 	private DbManager db;
 	private Vector<Vector<String>> bookType;
 	private Vector<String> cols;
+	private JScrollPane jspBookType;
 
 	public BookListForm() {
 		// TODO Auto-generated constructor stub
@@ -48,9 +49,10 @@ public class BookListForm extends BaseFrame {
 
 		dtm = new DefaultTableModel(bookType, cols);
 		jtbBookType = new JTable(dtm);
+		jspBookType = new JScrollPane(jtbBookType);
 
 		jpBookImgs = new BasePanel().setGrid(0, 4, 0, 10);
-		jcpBookImgs = new JScrollPane(jpBookImgs);
+		jspBookImgs = new JScrollPane(jpBookImgs);
 //		jcpBookImgs.setBackground(Color.white);
 
 		jlSearchTime = new BaseJLabel("검색건수 : ").setTextSize(13);
@@ -68,8 +70,8 @@ public class BookListForm extends BaseFrame {
 		jpTop.jpBottom.add(jbSearch);
 
 		jpCenter.addChild();
-		jpCenter.jpLeft.add(jtbBookType);
-		jpCenter.jpCenter.add(jcpBookImgs);
+		jpCenter.jpCenter.add(jspBookType);
+		jpCenter.jpRight.add(jspBookImgs);
 
 		jpBottom.setFlowRight();
 		jpBottom.add(jlSearchTime);

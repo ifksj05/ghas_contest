@@ -11,8 +11,8 @@ public class Run {
 //		new MainForm();
 //		new LoginForm();
 //		new SignUpForm();
-//		new BookListForm();
-		new BookInfoForm("1");
+		new BookListForm();
+//		new BookInfoForm("1");
 
 	}
 }
