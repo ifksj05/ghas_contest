@@ -112,11 +112,11 @@ CREATE TABLE IF NOT EXISTS `2023지방_2`.`rental` (
 ENGINE = InnoDB;
 
 set global local_infile = 1;
-load data local infile './datafiles/user.txt' into table 2023지방_2.user ignore 1 lines;
-load data local infile './datafiles/division.txt' into table 2023지방_2.division ignore 1 lines;
+load data local infile './datafiles/user.txt' into table 2023지방_2.user lines terminated by '\r' ignore 1 lines;
+load data local infile './datafiles/division.txt' into table 2023지방_2.division lines terminated by '\r' ignore 1 lines;
 load data local infile './datafiles/book.txt' into table 2023지방_2.book lines terminated by '\r\n' ignore 1 lines;
-load data local infile './datafiles/likebook.txt' into table 2023지방_2.likebook ignore 1 lines;
-load data local infile './datafiles/rental.txt' into table 2023지방_2.rental ignore 1 lines;
+load data local infile './datafiles/likebook.txt' into table 2023지방_2.likebook lines terminated by '\r' ignore 1 lines;
+load data local infile './datafiles/rental.txt' into table 2023지방_2.rental lines terminated by '\r' ignore 1 lines;
 
 drop user if exists 'user'@'localhost';
 create user 'user'@'localhost' identified by '1234';
