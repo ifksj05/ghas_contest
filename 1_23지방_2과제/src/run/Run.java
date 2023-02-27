@@ -4,6 +4,7 @@ import windows.BookInfoForm;
 import windows.BookListForm;
 import windows.LoginForm;
 import windows.MainForm;
+import windows.MyPageForm;
 import windows.SignUpForm;
 
 public class Run {
@@ -11,8 +12,8 @@ public class Run {
 //		new MainForm();
 //		new LoginForm();
 //		new SignUpForm();
-		new BookListForm();
+//		new BookListForm();
 //		new BookInfoForm("1");
-
+		new MyPageForm();
 	}
 }
