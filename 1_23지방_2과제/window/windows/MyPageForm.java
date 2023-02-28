@@ -1,6 +1,7 @@
 package windows;
 
 import java.awt.Color;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
@@ -10,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import bases.BaseFrame;
 import bases.BaseJLabel;
+import jdbc.DbManager;
 
 public class MyPageForm extends BaseFrame {
 	private BaseJLabel jlUserName;
@@ -24,9 +26,12 @@ public class MyPageForm extends BaseFrame {
 	private BaseJLabel jlBorrowing;
 	private JButton jbDelete;
 	private JButton jbPrint;
+	private String u_no;
+	private Vector<Vector<String>> tableData;
 
-	public MyPageForm() {
+	public MyPageForm(String u_no) {
 		// TODO Auto-generated constructor stub
+		this.u_no = u_no;
 		setFrame("마이페이지", 800, 400);
 	}
 
@@ -39,7 +44,16 @@ public class MyPageForm extends BaseFrame {
 		jrbLikeBook = new JRadioButton("관심도서");
 		jrbLikeBook.setBackground(Color.white);
 
-		dtm = new DefaultTableModel();
+		Vector<String> cols = new Vector<String>();
+		cols.add("이미지");
+		cols.add("도서명");
+		cols.add("읽은 페이지");
+		cols.add("대출일");
+		cols.add("반납일");
+
+		updateTableData();
+
+		dtm = new DefaultTableModel(tableData, cols);
 		jtb = new JTable(dtm);
 		jsp = new JScrollPane(jtb);
 
@@ -83,6 +97,14 @@ public class MyPageForm extends BaseFrame {
 	public void event() {
 		// TODO Auto-generated method stub
 
+	}
+
+	private void updateTableData() {
+		// TODO Auto-generated method stub
+		tableData = DbManager.db
+				.getDb("SELECT \r\n" + "b.b_name,\r\n" + "b.b_name,\r\n" + "concat(r.r_reading, '/', b_page),\r\n"
+						+ "r.r_date,\r\n" + "r.r_returnday\r\n" + "FROM 2023지방_2.rental as r\r\n" + "join book as b\r\n"
+						+ "on r.b_no = b.b_no\r\n" + "where r.u_no = ?;", u_no);
 	}
 
 }

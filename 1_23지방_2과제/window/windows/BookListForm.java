@@ -14,6 +14,7 @@ import bases.BaseFrame;
 import bases.BaseJLabel;
 import bases.BasePanel;
 import jdbc.DbManager;
+import model.ImageModel;
 
 public class BookListForm extends BaseFrame {
 
@@ -51,8 +52,11 @@ public class BookListForm extends BaseFrame {
 		jtbBookType = new JTable(dtm);
 		jspBookType = new JScrollPane(jtbBookType);
 
-		jpBookImgs = new BasePanel().setGrid(0, 4, 0, 10);
+		jpBookImgs = new BasePanel().setGrid(0, 4, 10, 0);
 		jspBookImgs = new JScrollPane(jpBookImgs);
+
+		initBookImgs();
+
 //		jcpBookImgs.setBackground(Color.white);
 
 		jlSearchTime = new BaseJLabel("검색건수 : ").setTextSize(13);
@@ -98,6 +102,23 @@ public class BookListForm extends BaseFrame {
 
 		cols = new Vector<String>();
 		cols.add("분류");
+
+	}
+
+	private void initBookImgs() {
+		// TODO Auto-generated method stub
+
+		Vector<ImageModel> bookImgsData = DbManager.db.getImageModel("SELECT * FROM 2023지방_2.book;", 7);
+
+		for (ImageModel row : bookImgsData) {
+			BasePanel tmp = new BasePanel();
+			tmp.setLine();
+			tmp.addChild();
+			tmp.jpCenter.add(new BaseJLabel().addImg(row.getIcon(), 150, 160));
+//			tmp.jpBottom.add(new BaseJLabel(row.getData().get(1)));
+			jpBookImgs.add(tmp);
+
+		}
 
 	}
 

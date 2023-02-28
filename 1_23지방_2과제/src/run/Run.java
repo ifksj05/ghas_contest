@@ -2,6 +2,7 @@ package run;
 
 import windows.BookInfoForm;
 import windows.BookListForm;
+import windows.BorrowPlusForm;
 import windows.LoginForm;
 import windows.MainForm;
 import windows.MyPageForm;
@@ -14,6 +15,7 @@ public class Run {
 //		new SignUpForm();
 //		new BookListForm();
 //		new BookInfoForm("1");
-		new MyPageForm();
+//		new MyPageForm("1");
+		new BorrowPlusForm();
 	}
 }
