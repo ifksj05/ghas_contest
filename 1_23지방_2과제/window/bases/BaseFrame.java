@@ -40,4 +40,10 @@ public abstract class BaseFrame extends JFrame implements BaseI {
 		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		super.setLocationRelativeTo(null);
 	}
+
+	public void refresh() {
+		// TODO Auto-generated method stub
+		repaint();
+		validate();
+	}
 }
