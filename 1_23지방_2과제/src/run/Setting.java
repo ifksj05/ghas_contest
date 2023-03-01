@@ -90,17 +90,22 @@ public class Setting {
 				+ "    ON DELETE NO ACTION\r\n" + "    ON UPDATE NO ACTION,\r\n" + "  CONSTRAINT `fk_rental_book1`\r\n"
 				+ "    FOREIGN KEY (`b_no`)\r\n" + "    REFERENCES `2023지방_2`.`book` (`b_no`)\r\n"
 				+ "    ON DELETE NO ACTION\r\n" + "    ON UPDATE NO ACTION)\r\n" + "ENGINE = InnoDB;\r\n" + "\r\n"
-				+ "set global local_infile = 1;\r\n"
-				+ "load data local infile './datafiles/user.txt' into table 2023지방_2.user lines terminated by '\\r' ignore 1 lines;\r\n"
-				+ "load data local infile './datafiles/division.txt' into table 2023지방_2.division lines terminated by '\\r' ignore 1 lines;\r\n"
-				+ "load data local infile './datafiles/book.txt' into table 2023지방_2.book lines terminated by '\\r\\n' ignore 1 lines;\r\n"
-				+ "load data local infile './datafiles/likebook.txt' into table 2023지방_2.likebook lines terminated by '\\r' ignore 1 lines;\r\n"
-				+ "load data local infile './datafiles/rental.txt' into table 2023지방_2.rental lines terminated by '\\r' ignore 1 lines;\r\n"
-				+ "\r\n" + "drop user if exists 'user'@'localhost';\r\n"
+				+ "set global local_infile = 1;\r\n" + "\r\n" + "drop user if exists 'user'@'localhost';\r\n"
 				+ "create user 'user'@'localhost' identified by '1234';\r\n"
 				+ "grant select, delete, insert, update on 2023지방_2.* to 'user'@'localhost';\r\n" + "\r\n"
 				+ "SET SQL_MODE=@OLD_SQL_MODE;\r\n" + "SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;\r\n"
 				+ "SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;\r\n" + "");
+
+		setDb("load data local infile './datafiles/user.txt' into table 2023지방_2.user ignore 1 lines;\r\n");
+		setDb("load data local infile './datafiles/division.txt' into table 2023지방_2.division ignore 1 lines;\r\n");
+		setDb("load data local infile './datafiles/book.txt' into table 2023지방_2.book ignore 1 lines;\r\n");
+		setDb("load data local infile './datafiles/likebook.txt' into table 2023지방_2.likebook ignore 1 lines;\r\n");
+		setDb("load data local infile './datafiles/rental.txt' into table 2023지방_2.rental ignore 1 lines;\r\n");
+//		setDb("load data local infile './datafiles/user.txt' into table 2023지방_2.user lines terminated by '\\r' ignore 1 lines;\r\n");
+//		setDb("load data local infile './datafiles/division.txt' into table 2023지방_2.division lines terminated by '\\r' ignore 1 lines;\r\n");
+//		setDb("load data local infile './datafiles/book.txt' into table 2023지방_2.book lines terminated by '\\r\\n' ignore 1 lines;\r\n");
+//		setDb("load data local infile './datafiles/likebook.txt' into table 2023지방_2.likebook lines terminated by '\\r' ignore 1 lines;\r\n");
+//		setDb("load data local infile './datafiles/rental.txt' into table 2023지방_2.rental lines terminated by '\\r' ignore 1 lines;\r\n");
 
 		Vector<Vector<String>> bookIndex = getDb("SELECT * FROM 2023지방_2.book;");
 		for (Vector<String> row : bookIndex) {

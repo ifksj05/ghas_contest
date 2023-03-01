@@ -15,12 +15,12 @@ import windows.SignUpForm;
 public class Run {
 	public static void main(String[] args) {
 //		new MainForm();
-//		new LoginForm();
+		new LoginForm();
 //		new SignUpForm();
 //		new BookListForm();
 //		new BookInfoForm("1");
 //		new MyPageForm("1");
-		new BorrowPlusForm();
+//		new BorrowPlusForm();
 //		new BookReadForm();
 //		new BookSettingForm();
 //		new BookUpdateForm();
