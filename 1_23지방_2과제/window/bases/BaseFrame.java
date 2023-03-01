@@ -24,6 +24,8 @@ public abstract class BaseFrame extends JFrame implements BaseI {
 		jpRight = new BasePanel();
 		jpBottom = new BasePanel();
 
+		jpMain.setBorder(10, 10, 10, 10);
+
 		made();
 		design();
 		event();

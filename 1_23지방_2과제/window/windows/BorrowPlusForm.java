@@ -55,7 +55,7 @@ public class BorrowPlusForm extends BaseFrame {
 		jpTop.jpBottom.add(new BaseJLabel("금").setTextCenter());
 		jpTop.jpBottom.add(new BaseJLabel("일").setTextCenter());
 
-		jpCenter.setGrid(6, 8, 5, 5);
+		jpCenter.setGrid(6, 7, 5, 5);
 		setDateRefresh();
 
 	}
@@ -122,15 +122,15 @@ public class BorrowPlusForm extends BaseFrame {
 		// TODO Auto-generated method stub
 		jpCenter.removeAll();
 
-		int weekStart = cal.get(Calendar.DAY_OF_WEEK);
+		int startWeek = cal.get(Calendar.DAY_OF_WEEK);
 		int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-		System.out.println("weekStart : " + weekStart);
+		System.out.println("weekStart : " + startWeek);
 		System.out.println("lastDay : " + lastDay);
 
 		jlDate.setText(Year + "년 " + String.format("%02d", (Month + 1)) + "월");
 
-		for (int i = 0; i < weekStart - 1; i++) {
+		for (int i = 0; i < startWeek - 1; i++) {
 			jpCenter.add(new BaseJLabel());
 		}
 
@@ -140,7 +140,7 @@ public class BorrowPlusForm extends BaseFrame {
 			jpCenter.add(tmp);
 		}
 
-		for (int i = 0; i < 42 - weekStart - lastDay; i++) {
+		for (int i = 0; i < 42 - startWeek - lastDay; i++) {
 			jpCenter.add(new BaseJLabel());
 		}
 
