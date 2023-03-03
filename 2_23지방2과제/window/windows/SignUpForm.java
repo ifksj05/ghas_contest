@@ -69,13 +69,25 @@ public class SignUpForm extends BaseFrame {
 //				Msg.error("빈칸이 있습니다.");
 //				return;
 //			}
-//
-//			if (name.length() < 2) {
+//	
+//			String patternName = "^([가-힣]+){2,}$";
+//			if (!Pattern.matches(patternName, name)) {
 //				Msg.error("이름은 한글로 2글자 이상만 가능합니다.");
 //				jtfName.setText("");
 //				jtfName.requestFocus();
 //				return;
 //			}
+
+			String pattern1 = "^([가-힣]+){2,}$";
+
+			if (!Pattern.matches(pattern1, name)) {
+				Msg.error("이름은 한글로 2글자 이상만 가능합니다.");
+
+				jtfName.setText("");
+				jtfName.requestFocus();
+				return;
+
+			}
 //
 //			if (isIdDouble(id) || id.equals("admin")) {
 //				Msg.error("이미 있는 아이디 입니다.");
@@ -83,8 +95,8 @@ public class SignUpForm extends BaseFrame {
 //				jtfId.requestFocus();
 //				return;
 //			}
-//
-//			if (false) {
+//			String patternId = "^(?=.*[가-힣])$";
+//			if (Pattern.matches(patternId, id)) {
 //				Msg.error("아이디에 한글은 사용이 불가능합니다.");
 //				jtfId.setText("");
 //				jtfId.requestFocus();
@@ -97,13 +109,13 @@ public class SignUpForm extends BaseFrame {
 //				return;
 //
 //			}
-			if (isPwCk(pw)) {
-				Msg.error("비밀번호는 연속으로 같은 글자가 올 수 없습니다.");
-				jtfPw.setText("");
-				jtfPw.requestFocus();
-				return;
-
-			}
+//			if (isPwCk(pw)) {
+//				Msg.error("비밀번호는 연속으로 같은 글자가 올 수 없습니다.");
+//				jtfPw.setText("");
+//				jtfPw.requestFocus();
+//				return;
+//
+//			}
 
 //			DbManager.db.setDb("INSERT INTO `2_2023지방_2`.`user` (`u_name`, `u_id`, `u_pw`) VALUES (?, ?, ?);", name, id,
 //					pw);

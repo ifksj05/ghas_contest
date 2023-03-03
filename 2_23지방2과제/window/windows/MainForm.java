@@ -144,17 +144,30 @@ public class MainForm extends BaseFrame {
 		System.out.println("bookTypeIndex : " + bookTypeIndex);
 
 		Vector<ImageModel> bookImgs = DbManager.db.getImageModel("SELECT \r\n" + "r.b_no,\r\n" + "b.b_name,\r\n"
-				+ "count(r.b_no),\r\n" + "d.d_no,\r\n" + "d_name,\r\n" + "b.b_img\r\n"
-				+ "FROM 2_2023지방_2.rental as r\r\n" + "join book as b\r\n" + "join division as d\r\n"
+				+ "count(r.b_no),\r\n" + "d.d_no,\r\n" + "d_name,\r\n" + "b.b_img,\r\n" + "b.b_author,\r\n"
+				+ "b.b_exp\r\n" + "FROM 2_2023지방_2.rental as r\r\n" + "join book as b\r\n" + "join division as d\r\n"
 				+ "on r.b_no = b.b_no and b.d_no = d.d_no\r\n" + "where d.d_no like ?\r\n" + "group by r.b_no\r\n"
 				+ "order by count(r.b_no) desc, b_no\r\n" + "limit 5;", 5, bookTypeIndex);
 
 		for (ImageModel row : bookImgs) {
 			BasePanel tmp = new BasePanel();
-			tmp.add(new BaseImgLabel(row.getData().get(1), row.getIcon(), 120, 150).setTextBottom().setHCenter());
+			BaseImgLabel jlImg = new BaseImgLabel(row.getData().get(1), row.getIcon(), 120, 150).setTextBottom()
+					.setHCenter();
+			tmp.add(jlImg);
 
 			tmp.setLine();
 			jpBookGridImg.add(tmp);
+
+			String author = row.getData().get(6);
+			String exp = row.getData().get(7);
+			if (exp.length() > 13) {
+				exp = exp.substring(0, 13);
+
+			}
+
+			String toolTipText = "<html> 저자 : " + author + " <br/>" + "설명 : " + exp;
+
+			jlImg.setToolTipText(toolTipText);
 
 		}
 
