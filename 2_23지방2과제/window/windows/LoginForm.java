@@ -75,6 +75,9 @@ public class LoginForm extends BaseFrame {
 			}
 			if (id.equals("admin") && pw.equals("1234")) {
 				System.out.println("관리자 로그인");
+				UserModel.admin();
+				mainForm.logRefresh();
+				super.dispose();
 				return;
 			}
 			Vector<String> userData;

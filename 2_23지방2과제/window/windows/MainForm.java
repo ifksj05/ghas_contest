@@ -26,6 +26,9 @@ public class MainForm extends BaseFrame {
 	private JComboBox<String> jcbBookType;
 	private BasePanel jpBookGridImg;
 	private BasePanel jpBts;
+	private JButton jbBookSet;
+	private JButton jbBookInsert;
+	private JButton jbBookGraph;
 
 	public MainForm() {
 		// TODO Auto-generated constructor stub
@@ -43,17 +46,12 @@ public class MainForm extends BaseFrame {
 		jbBookList = new JButton("도서목록");
 		jbMyPage = new JButton("마이페이지");
 		jbBookRead = new JButton("책 읽기");
+		jbBookSet = new JButton("도서관리");
+		jbBookInsert = new JButton("도서등록");
+		jbBookGraph = new JButton("대출통계");
 		jbExit = new JButton("종료");
 
-		jpBts = new BasePanel().setFlowCenter();
-		jpBts.add(jbLog);
-		jpBts.add(jbSignUp);
-		jpBts.add(jbBookList);
-		jpBts.add(jbMyPage);
-		jpBts.add(jbBookRead);
-		jpBts.add(jbExit);
-
-//		jcbBookType = new JComboBox<String>();
+		// jcbBookType = new JComboBox<String>();
 
 		Vector<Vector<String>> bookTypes = DbManager.db.getDb("SELECT * FROM 2_2023지방_2.division;");
 
@@ -62,8 +60,6 @@ public class MainForm extends BaseFrame {
 
 		updateGird();
 
-		login();
-		logRefresh();
 	}
 
 	@Override
@@ -80,8 +76,7 @@ public class MainForm extends BaseFrame {
 		jpBottom.jpCenter.add(jpBookGridImg);
 		jpBottom.jpCenter.setLine("인기 도서");
 
-		jpBottom.jpBottom.add(jpBts);
-
+		logRefresh();
 	}
 
 	@Override
@@ -103,6 +98,40 @@ public class MainForm extends BaseFrame {
 			logRefresh();
 			refresh();
 
+		});
+
+		jbSignUp.addActionListener(e -> {
+			System.out.println("회원가입 폼 열기");
+			new SignUpForm();
+		});
+
+		jbBookList.addActionListener(e -> {
+			System.out.println("도서 목록 폼 열기");
+			new BookListForm();
+		});
+		jbMyPage.addActionListener(e -> {
+			System.out.println("마이페이지 폼 열기");
+
+		});
+		jbBookRead.addActionListener(e -> {
+			System.out.println("책 읽기 폼 열기");
+
+		});
+		jbBookSet.addActionListener(e -> {
+			System.out.println("도서관리 폼 열기");
+
+		});
+		jbBookInsert.addActionListener(e -> {
+			System.out.println("도서등록 폼 열기");
+
+		});
+		jbBookGraph.addActionListener(e -> {
+			System.out.println("대출통계 폼 열기");
+
+		});
+		jbExit.addActionListener(e -> {
+			System.out.println("종료");
+			System.exit(0);
 		});
 	}
 
@@ -188,16 +217,13 @@ public class MainForm extends BaseFrame {
 
 		BasePanel tmp = new BasePanel().setFlowCenter();
 		tmp.add(jbLog);
-		tmp.add(jbBookList);
-		tmp.add(jbMyPage);
-		tmp.add(jbBookRead);
+		tmp.add(jbBookSet);
+		tmp.add(jbBookInsert);
+		tmp.add(jbBookGraph);
 		tmp.add(jbExit);
 
 		jlTitle.setText("관리자님 환영합니다.");
 		jbLog.setText("로그아웃");
-		jbBookList.setEnabled(true);
-		jbMyPage.setEnabled(true);
-		jbBookRead.setEnabled(true);
 
 		jpBottom.jpBottom.add(tmp);
 
@@ -207,27 +233,21 @@ public class MainForm extends BaseFrame {
 	public void logRefresh() {
 		// TODO Auto-generated method stub
 
+		if (UserModel.admin) {
+			admin();
+			return;
+		}
+
 		if (UserModel.log) {
 //			System.out.println("로그인");
 
-			jlTitle.setText(UserModel.userData.get(1) + "님 환영합니다.");
-			jbLog.setText("로그아웃");
-			jbSignUp.setEnabled(false);
-			jbBookList.setEnabled(true);
-			jbMyPage.setEnabled(true);
-			jbBookRead.setEnabled(true);
-
+			login();
 			return;
 		}
 
 //		System.out.println("비로그인");
 
-		jlTitle.setText("로그인 후 이용해주세요.");
-		jbLog.setText("로그인");
-		jbSignUp.setEnabled(true);
-		jbBookList.setEnabled(false);
-		jbMyPage.setEnabled(false);
-		jbBookRead.setEnabled(false);
+		logout();
 
 	}
 
