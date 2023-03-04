@@ -77,7 +77,6 @@ public class SignUpForm extends BaseFrame {
 //				jtfName.requestFocus();
 //				return;
 //			}
-
 			String pattern1 = "^([가-힣]+){2,}$";
 
 			if (!Pattern.matches(pattern1, name)) {
@@ -88,7 +87,6 @@ public class SignUpForm extends BaseFrame {
 				return;
 
 			}
-//
 //			if (isIdDouble(id) || id.equals("admin")) {
 //				Msg.error("이미 있는 아이디 입니다.");
 //				jtfId.setText("");
