@@ -115,7 +115,9 @@ public class BookListForm extends BaseFrame {
 						+ "and replace(b_name, ' ', '') like concat('%',?,'%')\r\n"
 						+ "and replace(b_author, ' ', '') like concat('%',?,'%')\r\n" + ";",
 				7, bookType, bookName, bookAuthor);
-
+		
+		
+		
 		for (ImageModel row : dataBook) {
 
 			BasePanel tmpBookImg = new BasePanel().setLine();
