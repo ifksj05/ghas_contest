@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -12,6 +13,7 @@ import bases.BaseComboBox;
 import bases.BaseFrame;
 import bases.BaseImgLabel;
 import bases.BaseLabel;
+import bases.BaseNullPanel;
 import bases.BasePanel;
 import bases.BaseTable;
 import bases.BaseTextField;
@@ -115,20 +117,24 @@ public class BookListForm extends BaseFrame {
 						+ "and replace(b_name, ' ', '') like concat('%',?,'%')\r\n"
 						+ "and replace(b_author, ' ', '') like concat('%',?,'%')\r\n" + ";",
 				7, bookType, bookName, bookAuthor);
-		
-		
-		
+
 		for (ImageModel row : dataBook) {
 
-			BasePanel tmpBookImg = new BasePanel().setLine();
-			tmpBookImg.setPreferredSize(new Dimension(150, 175));
+//			BasePanel tmpBookImg = new BasePanel().setLine();
+//			tmpBookImg.setPreferredSize(new Dimension(150, 175));
 
-			BaseImgLabel imgLabel = new BaseImgLabel(row.getData().get(1), row.getIcon(), 120, 150).setTextBottom()
+			BaseImgLabel imgLabel = new BaseImgLabel(row.getData().get(1), row.getIcon(), 130, 160).setTextBottom()
 					.setHCenter();
 
-			tmpBookImg.add(imgLabel);
+//			tmpBookImg.add(imgLabel);
 
-			jpImgs.add(tmpBookImg);
+			JLabel jlLike = new JLabel("♡");
+
+			BaseNullPanel jpNullPanel = new BaseNullPanel(150, 200, imgLabel, 0, 0, 150, 180, jlLike, 5, 5, 20, 20);
+
+			jpNullPanel.setLine();
+
+			jpImgs.add(jpNullPanel);
 		}
 
 		jlRowSize.setText("검색건수 : " + dataBook.size() + "건");
