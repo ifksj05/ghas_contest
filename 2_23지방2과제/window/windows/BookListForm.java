@@ -4,105 +4,149 @@ import java.awt.Dimension;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
+import bases.BaseComboBox;
 import bases.BaseFrame;
 import bases.BaseImgLabel;
 import bases.BaseLabel;
 import bases.BasePanel;
+import bases.BaseTable;
+import bases.BaseTextField;
+import bases.DataModel;
 import jdbc.DbManager;
+import messge.Msg;
 import model.ImageModel;
 
 public class BookListForm extends BaseFrame {
-	private JComboBox<String> jcbSearchType;
+	private BaseComboBox jcbBookType;
 	private JTextField jtfSearch;
 	private JButton jbSearch;
-	private JScrollPane jspBookImgs;
-	private JScrollPane jspBookType;
-	private JTable jtpBookType;
-	private DefaultTableModel dtmBookType;
-	private Vector<String> cols;
-	private BasePanel jpBookImgs;
+	private BaseTable jtbType;
+	private JScrollPane jspImgs;
+	private BaseLabel jlRowSize;
+	private BasePanel jpImgs;
 
 	public BookListForm() {
 		// TODO Auto-generated constructor stub
-		setFrame("도서목록", 900, 600);
+		setFrame("도서목록", 830, 500);
 	}
 
 	@Override
 	public void made() {
 		// TODO Auto-generated method stub
-		jcbSearchType = new JComboBox<String>();
-		jcbSearchType.addItem("도서명");
-		jcbSearchType.addItem("저자");
-
-		jtfSearch = new JTextField();
-		jtfSearch.setPreferredSize(new Dimension(200, 27));
-
+		jcbBookType = new BaseComboBox("도서명", "저자");
+		jtfSearch = new JTextField(12);
 		jbSearch = new JButton("검색");
 
-		cols = new Vector<String>();
-		cols.add("분류");
+		jtbType = new BaseTable(DataModel.getAllType(), "분류");
 
-		dtmBookType = new DefaultTableModel(null, cols);
-		jtpBookType = new JTable(dtmBookType);
-		jspBookType = new JScrollPane(jtpBookType);
+		jpImgs = new BasePanel().setGrid(0, 4, 10, 0);
+		jspImgs = new JScrollPane(jpImgs);
 
-		jpBookImgs = new BasePanel().setGrid(0, 4, 10, 0);
-		jspBookImgs = new JScrollPane(jpBookImgs);
+		jlRowSize = new BaseLabel("검색건수 : ");
+
+		jtbType.jtb.changeSelection(0, 0, false, false);
+		jspImgsChange();
+
 	}
 
 	@Override
 	public void design() {
 		// TODO Auto-generated method stub
 		jpTop.addChild();
+
 		jpTop.jpTop.add(new BaseLabel("도서 목록").setFontSize(25).setTextCenter());
 		jpTop.jpBottom.setFlowRight();
 		jpTop.jpBottom.add(new BaseLabel("검색"));
-		jpTop.jpBottom.add(jcbSearchType);
+		jpTop.jpBottom.add(jcbBookType);
 		jpTop.jpBottom.add(jtfSearch);
 		jpTop.jpBottom.add(jbSearch);
 
 		jpCenter.addChild();
-		jpCenter.jpCenter.add(jspBookType);
-		jpCenter.jpRight.add(jspBookImgs);
-		jpCenter.jpRight.setPreferredSize(new Dimension(700, HEIGHT));
+		jpCenter.jpLeft.add(jtbType).setPreferredSize(new Dimension(100, 0));
+		jpCenter.jpCenter.add(jspImgs);
 
-		updateImg();
+		jpBottom.setFlowRight().add(jlRowSize);
 
-		jpMain.setEmtBorder(30, 20, 20, 20);
 	}
 
 	@Override
 	public void event() {
 		// TODO Auto-generated method stub
-
+		jbSearch.addActionListener(e -> {
+			jspImgsChange();
+		});
 	}
 
-	private void updateImg() {
+	public void jspImgsChange() {
 		// TODO Auto-generated method stub
-		jpBookImgs.removeAll();
 
-		Vector<ImageModel> bookData = DbManager.db.getImageModel("SELECT * FROM 2_2023지방_2.book;", 7);
+		jpImgs.removeAll();
 
-		for (ImageModel row : bookData) {
+		String bookType = "";
+		String bookName = "";
+		String bookAuthor = "";
 
-			BasePanel jpBookTmp = new BasePanel();
-			jpBookTmp.add(new BaseImgLabel(row.getData().get(1), row.getIcon(), 120, 150).setTextBottom().setHCenter());
+		bookType = (jtbType.jtb.getSelectedRow() == 0 ? "" : jtbType.jtb.getSelectedRow() + "");
+		if (jcbBookType.getSelectedIndex() == 0) {
+			bookName = jtfSearch.getText();
 
-			jpBookTmp.setLine();
-			jpBookTmp.setPreferredSize(new Dimension(150, 170));
-
-			jpBookImgs.add(jpBookTmp);
+		} else {
+			bookAuthor = jtfSearch.getText();
 
 		}
 
-		super.refresh();
+		// 4.5).(3)스페이스바만 검색할 경우 스페이스 무시
+		bookName = (bookName.isBlank() ? "" : bookName);
+		bookAuthor = (bookAuthor.isBlank() ? "" : bookAuthor);
 
+		System.out.println("bookType : " + bookType);
+		System.out.println("bookName : " + bookName);
+		System.out.println("bookAuthor : " + bookAuthor);
+
+		bookName.replace(" ", "");
+		bookAuthor.replace(" ", "");
+
+		Vector<ImageModel> dataBook = DbManager.db.getImageModel(
+				"SELECT *  FROM 2_2023지방_2.book\r\n" + "where d_no like concat('%',?) \r\n"
+						+ "and replace(b_name, ' ', '') like concat('%',?,'%')\r\n"
+						+ "and replace(b_author, ' ', '') like concat('%',?,'%')\r\n" + ";",
+				7, bookType, bookName, bookAuthor);
+
+		for (ImageModel row : dataBook) {
+
+			BasePanel tmpBookImg = new BasePanel().setLine();
+			tmpBookImg.setPreferredSize(new Dimension(150, 175));
+
+			BaseImgLabel imgLabel = new BaseImgLabel(row.getData().get(1), row.getIcon(), 120, 150).setTextBottom()
+					.setHCenter();
+
+			tmpBookImg.add(imgLabel);
+
+			jpImgs.add(tmpBookImg);
+		}
+
+		jlRowSize.setText("검색건수 : " + dataBook.size() + "건");
+
+		if (dataBook.size() < 8) {
+
+			for (int i = 0; i < 7 - dataBook.size(); i++) {
+				jpImgs.add(new BaseLabel());
+			}
+
+		}
+
+		if (dataBook.size() == 0) {
+			jtbType.jtb.changeSelection(0, 0, false, false);
+			jtfSearch.setText("");
+			Msg.error("검색결과가 없습니다.");
+			jspImgsChange();
+		}
+
+		super.refresh();
 	}
 
 }

@@ -6,9 +6,11 @@ import java.util.Vector;
 import javax.swing.JComboBox;
 
 public class BaseComboBox extends JComboBox<String> {
-	public BaseComboBox() {
+	public BaseComboBox(String... strVals) {
 		// TODO Auto-generated constructor stub
-
+		for (String val : strVals) {
+			super.addItem(val);
+		}
 	}
 
 	public BaseComboBox addData(Vector<Vector<String>> data, int index) {

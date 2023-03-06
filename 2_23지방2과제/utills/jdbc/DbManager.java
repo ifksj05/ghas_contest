@@ -22,7 +22,8 @@ public class DbManager {
 
 	private String url = "jdbc:mysql://localhost/2_2023지방_2?" + "ChacterEncoding=UTF-8&" + "serverTimezone=UTC&"
 			+ "allowPublicKeyRetrieval=true&" + "allowLoadLocalInfile=true&" + "allowMultiQueries=true";
-	private String id = "user";
+	private String id = "root";
+//	private String id = "user";
 	private String pw = "1234";
 	private Connection con;
 	private PreparedStatement pstmt;

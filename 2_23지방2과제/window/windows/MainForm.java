@@ -76,6 +76,11 @@ public class MainForm extends BaseFrame {
 		jpBottom.jpCenter.add(jpBookGridImg);
 		jpBottom.jpCenter.setLine("인기 도서");
 
+		// 테스트 로그인 상태
+		Vector<Vector<String>> user = DbManager.db.getDb("SELECT * FROM 2023지방_2.user where u_id = 'user01'");
+		UserModel.login(user.get(0));
+		login();
+
 		logRefresh();
 	}
 
